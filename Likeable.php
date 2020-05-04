@@ -82,11 +82,14 @@ trait Likeable
      * 
      * @return float
      */
-    public function likePercentage()
+    public function likePercentage(): float
     {
         $total = self::countLikes('like') + self::countLikes('dislike');
+        
+        if($total != 0)
+            return round((self::countLikes('like') / $total) * 100);
 
-        return round((self::countLikes('like') / $total) * 100);
+        return 0;        
     }
 
     /**
@@ -96,7 +99,7 @@ trait Likeable
      * 
      * @return int
      */
-    public function countLikes($type)
+    public function countLikes($type): int
     {
         return $this->likeCounter()->avg($type);
     }
