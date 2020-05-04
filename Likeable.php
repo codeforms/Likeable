@@ -89,7 +89,7 @@ trait Likeable
         if($total != 0)
             return round((self::countLikes('like') / $total) * 100);
 
-        return 0;        
+        return $total;        
     }
 
     /**
@@ -155,17 +155,9 @@ trait Likeable
     private function updateCurrentLike($beta, $alpha)
     {
         $this->likes()->update(['response' => $alpha]);
+        self::decrementLike($beta);
 
-        if(self::countLikes($beta) > 0) 
-            $this->likeCounter()->decrement($beta);
-
-        if(is_null(self::countLikes($alpha))) {
-            $this->likeCounter()->create()->increment($alpha);
-            return true;
-        }
-
-        $this->likeCounter()->increment($alpha);
-        return true;
+        return self::incrementLike($alpha);
     }
 
     /**
@@ -177,13 +169,34 @@ trait Likeable
     {
         $this->likes()->create(['response' => $alpha]);
 
-        if(is_null(self::countLikes($alpha))) {
-            $this->likeCounter()->create()->increment($alpha);
+        return self::incrementLike($alpha);
+    }
+
+    /**
+     * @param $type
+     * 
+     * @return boolean
+     */
+    private function incrementLike($type): bool
+    {
+        if(is_null(self::countLikes($type))) {
+            $this->likeCounter()->create()->increment($type);
             return true;
         }
 
-        $this->likeCounter()->increment($alpha);
+        $this->likeCounter()->increment($type);
         return true;
+    }
+
+    /**
+     * @param $type
+     * 
+     * @return boolean
+     */
+    private function decrementLike($type): bool
+    {
+        if(self::countLikes($type) > 0) 
+            return $this->likeCounter()->decrement($type);
     }
 
     /**
