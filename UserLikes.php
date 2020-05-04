@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 /**
- * Like trait for user model
+ * Trait for user model
  * 
  * @package CodeForms\Repositories\Like
  */
@@ -40,22 +40,15 @@ trait UserLikes
 	{
 		$likes = $this->userLikes()->where('response', $type)->get();
 
-		if(count($likes) > 0)
+		if(count($likes) > 0) {
 			$collection = new Collection;
 			foreach($likes as $like)
 				$collection->push(app($like->likeable_type)->find($like->likeable_id));
 
 			return $collection;
+		}
 
 		return null;
-	}
-
-	/**
-	 * @example $user->deleteLikes()
-	 */
-	public function deleteLikes()
-	{
-		return $this->userLikes()->delete();
 	}
 
 	/**
