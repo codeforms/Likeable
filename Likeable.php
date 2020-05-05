@@ -207,7 +207,7 @@ trait Likeable
     private function handleUndoLikes($type): bool
     {
         if(self::hasLike($type, auth()->user()->id)) {
-            $this->likeCounter()->decrement($type);
+            self::decrementLike($type);
             $this->likes()->where('user_id', auth()->user()->id)->delete();
 
             return true;
