@@ -22,6 +22,20 @@ class Post extends Model
 	use Likeable;
 }
 ```
+* (Tercihen) UserLikes trait dosyasını User model'a ekleyin;
+> UserLikes trait dosyası, kullanıcıların like ve dislike kayıtlarını object olarak almayı sağlar.
+```php
+namespace App;
+
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use CodeForms\Repositories\Like\Likeable;
+
+class User extends Authenticatable
+{
+    use Notifiable, Likeable;
+```
 
 ## Kullanım
 ```php
@@ -43,4 +57,12 @@ $post->countLikes('like'); // $post'un sadece 'like' sayısı
 $post->countLikes('dislike'); // $post'un sadece 'dislike' sayısı
 
 $post->deleteAllLikes(); // $post'a ait tüm like ve dislike kayıtlarını siler
+
+/**
+ * UserLikes
+ */
+$user = User::find(1);
+
+$user->likes(); // bir kullanıcının beğendiği tüm model kaynakları
+$user->dislikes(); // bir kullanıcının beğenmediği tüm model kaynakları
 ``` 
