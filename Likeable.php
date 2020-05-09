@@ -58,21 +58,21 @@ trait Likeable
     }
 
     /**
-     * @example $post->undoLike()
+     * @example $post->unLike()
      * 
      * @return boolean
      */
-    public function undoLike(): bool
+    public function unLike(): bool
     {
         return self::handleUndoLikes('like');
     }
 
     /**
-     * @example $post->undoDislike()
+     * @example $post->unDislike()
      * 
      * @return boolean
      */
-    public function undoDislike(): bool
+    public function unDislike(): bool
     {
         return self::handleUndoLikes('dislike');
     }
