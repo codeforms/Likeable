@@ -30,11 +30,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use CodeForms\Repositories\Like\Likeable;
+use CodeForms\Repositories\Like\UserLikes;
 
 class User extends Authenticatable
 {
-    use Notifiable, Likeable;
+    use Notifiable, UserLikes;
 ```
 
 ## Kullanım
