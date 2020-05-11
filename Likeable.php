@@ -101,7 +101,7 @@ trait Likeable
      */
     public function countLikes($type): int
     {
-        return $this->likeCounter()->avg($type);
+        return (int)$this->likeCounter()->avg($type);
     }
 
     /**
@@ -179,7 +179,7 @@ trait Likeable
      */
     private function incrementLike($type): bool
     {
-        if(is_null(self::countLikes($type))) {
+        if(self::countLikes($type) > 0) {
             $this->likeCounter()->create()->increment($type);
             return true;
         }
@@ -195,8 +195,11 @@ trait Likeable
      */
     private function decrementLike($type): bool
     {
-        if(self::countLikes($type) > 0) 
+        if(self::countLikes($type) > 0) {
             return $this->likeCounter()->decrement($type);
+        }
+        
+        return false;
     }
 
     /**
