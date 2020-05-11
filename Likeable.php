@@ -179,7 +179,7 @@ trait Likeable
      */
     private function incrementLike($type): bool
     {
-        if(self::countLikes($type) > 0) {
+        if(!$this->likeCounter) {
             $this->likeCounter()->create()->increment($type);
             return true;
         }
@@ -198,7 +198,7 @@ trait Likeable
         if(self::countLikes($type) > 0) {
             return $this->likeCounter()->decrement($type);
         }
-        
+
         return false;
     }
 
