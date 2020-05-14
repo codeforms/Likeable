@@ -10,6 +10,7 @@ Laravel tabanlı yapılar için 'beğen' / 'beğenme' işlevselliğine olanak ta
 ``` php artisan migrate```
 * Likeable trait dosyasını, kullanmak istediğiniz model dosyalarına ekleyiniz;
 ```php
+<?php
 namespace App\Post;
 
 use CodeForms\Repositories\Like\Likeable;
@@ -25,6 +26,7 @@ class Post extends Model
 
 ## Kullanım
 ```php
+<?php
 $post = Post::find(1);
 
 $post->hasLike(); // like + dislike
@@ -47,6 +49,7 @@ $post->deleteAllLikes(); // $post'a ait tüm like ve dislike kayıtlarını sile
 ---
 * (Tercihen) UserLikes trait dosyasını User model'a ekleyin; UserLikes trait dosyası, kullanıcıların like ve dislike kayıtlarını object olarak almayı sağlar.
 ```php
+<?php
 namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -60,6 +63,7 @@ class User extends Authenticatable
 ```
 #### UserLikes kullanımı
 ```php
+<?php
 $user = User::find(1);
 
 $user->likes(); // bir kullanıcının beğendiği tüm model kaynakları
