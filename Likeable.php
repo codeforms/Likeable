@@ -116,6 +116,7 @@ trait Likeable
     /**
      * @param string $type
      * @param integer $user_id
+     * @since PHP 8.0+
      * 
      * @return boolean
      */
@@ -124,13 +125,9 @@ trait Likeable
         if(self::hasLike($type, $user_id))
             return false;
 
-        switch ($type) {
-            case 'like':
-                return self::handleLikes('dislike', 'like', $user_id);
-                break;
-            case 'dislike':
-                return self::handleLikes('like', 'dislike', $user_id);
-                break;
+        return match($type) {
+            'like'    => self::handleLikes('dislike', 'like', $user_id),
+            'dislike' => self::handleLikes('like', 'dislike', $user_id)
         }
     }
 
